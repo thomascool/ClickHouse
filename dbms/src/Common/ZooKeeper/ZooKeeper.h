@@ -274,6 +274,20 @@ public:
         return path;
     }
 
+    void remove()
+    {
+        try
+        {
+            zookeeper.tryRemove(path);
+            path.clear();
+        }
+        catch (...)
+        {
+            ProfileEvents::increment(ProfileEvents::CannotRemoveEphemeralNode);
+            throw;
+        }
+    }
+
     void getRemoveOps(zkutil::Requests & ops) const
     {
         ops.emplace_back(zkutil::makeRemoveRequest(path, -1));
@@ -306,11 +320,10 @@ public:
 
         try
         {
-            zookeeper.tryRemove(path);
+            remove();
         }
         catch (...)
         {
-            ProfileEvents::increment(ProfileEvents::CannotRemoveEphemeralNode);
             DB::tryLogCurrentException(__PRETTY_FUNCTION__);
         }
     }
