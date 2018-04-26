@@ -18,3 +18,4 @@ SELECT * FROM test.clear_column1;
 
 DROP TABLE IF EXISTS test.clear_column1;
 DROP TABLE IF EXISTS test.clear_column2;
+DROP TABLE IF EXISTS test.clear_column3;

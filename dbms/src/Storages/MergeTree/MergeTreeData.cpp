@@ -1596,7 +1596,7 @@ MergeTreeData::DataPartsVector MergeTreeData::removePartsInRangeFromWorkingSet(c
         {
             if (part->info.max_block >= drop_range.min_block)
             {
-                String error = "Unexpected merged part " + part->name + " intersecting drop range.";
+                String error = "Unexpected merged part " + part->name + " intersecting drop range " + drop_range.getPartName();
                 if (!skip_intersecting_parts)
                     throw Exception(error, ErrorCodes::LOGICAL_ERROR);
 
@@ -1612,7 +1612,7 @@ MergeTreeData::DataPartsVector MergeTreeData::removePartsInRangeFromWorkingSet(c
 
         if (part->info.min_block <= drop_range.max_block && part->info.max_block > drop_range.max_block)
         {
-            String error = "Unexpected merged part " + part->name + " intersecting drop range.";
+            String error = "Unexpected merged part " + part->name + " intersecting drop range " + drop_range.getPartName();
             if (!skip_intersecting_parts)
                 throw Exception(error, ErrorCodes::LOGICAL_ERROR);
 
